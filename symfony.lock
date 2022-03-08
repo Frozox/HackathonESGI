@@ -77,6 +77,18 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.7"
     },
+    "friendsofsymfony/ckeditor-bundle": {
+        "version": "2.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "f5ad42002183a6881962683e6d84bbb25cdfce5d"
+        },
+        "files": [
+            "config/packages/fos_ckeditor.yaml"
+        ]
+    },
     "jms/metadata": {
         "version": "2.6.1"
     },
@@ -132,6 +144,9 @@
     },
     "sonata-project/doctrine-extensions": {
         "version": "1.16.0"
+    },
+    "sonata-project/doctrine-orm-admin-bundle": {
+        "version": "4.2.7"
     },
     "sonata-project/exporter": {
         "version": "2.11.0"
