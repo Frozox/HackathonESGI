@@ -17,6 +17,7 @@
         "sensio/framework-extra-bundle": "^6.1",
         "sonata-project/admin-bundle": "^4.9",
         "symfony/asset": "6.0.*",
+        "sonata-project/doctrine-orm-admin-bundle": "^4.2",
         "symfony/console": "6.0.*",
         "symfony/doctrine-messenger": "6.0.*",
         "symfony/dotenv": "6.0.*",
@@ -84,9 +85,13 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
             "ckeditor:install": "symfony-cmd"
         },
+<<<<<<< HEAD
         "post-install-cmd": [
             "@auto-scripts"
         ],
+=======
+        "post-install-cmd": [],
+>>>>>>> 7e31a87 (setup blog backoffice)
         "post-update-cmd": [
             "@auto-scripts"
         ]
