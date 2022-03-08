@@ -2,8 +2,8 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-$red: red;
+$red: green;
 
 body {
-    background-color: lightgray;
+    background-color: $red;
 }
