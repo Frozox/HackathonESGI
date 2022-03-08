@@ -36,8 +36,16 @@ APP_SECRET=1d459742e4eedfd698fea63db5cc808c
 # Format described at https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
 # IMPORTANT: You MUST configure your server version, either here or in config/packages/doctrine.yaml
 #
+APP_ENV=dev
+APP_SECRET=1d459742e4eedfd698fea63db5cc808c
+
+DB_USER=hackathon
+DB_NAME=hackathon
+DB_PASSWORD=hackathon
+DB_HOST=hackathon-mariadb:3306
+DB_SRV_VERSION=mariadb-10.7.1
+DATABASE_URL="mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}"
 # DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
-# DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
 # DATABASE_URL="postgresql://symfony:ChangeMe@127.0.0.1:5432/app?serverVersion=13&charset=utf8"
 ###< doctrine/doctrine-bundle ###
 ```
