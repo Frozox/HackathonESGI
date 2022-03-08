@@ -1,92 +1,62 @@
 <?php
+
 namespace App\Security;
 
-use App\Form\AdminLoginForm;
-use App\Entity\User;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
-use Symfony\Component\Security\Guard\AuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\AbstractLoginFormAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-final class AdminLoginAuthenticator extends AbstractFormLoginAuthenticator implements AuthenticatorInterface
+class AdminLoginAuthenticator extends AbstractLoginFormAuthenticator
 {
-    /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
+    use TargetPathTrait;
 
-    /**
-     * @var RouterInterface
-     */
-    private $router;
+    public const LOGIN_ROUTE = 'admin_login';
 
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $passwordEncoder;
+    private UrlGeneratorInterface $urlGenerator;
 
-    public function __construct(
-        FormFactoryInterface $formFactory,
-        RouterInterface $router,
-        UserPasswordEncoderInterface $passwordEncoder
-    ) {
-        $this->formFactory = $formFactory;
-        $this->router = $router;
-        $this->passwordEncoder = $passwordEncoder;
+    public function __construct(UrlGeneratorInterface $urlGenerator)
+    {
+        $this->urlGenerator = $urlGenerator;
     }
 
-    public function supports(Request $request): bool
+    public function authenticate(Request $request): Passport
     {
-        return $request->attributes->get('_route') === 'admin_login' && $request->isMethod('POST');
-    }
+        $email = $request->request->get('email', '');
 
-    public function getCredentials(Request $request): array
-    {
-        $form = $this->formFactory->create(AdminLoginForm::class);
-        $form->handleRequest($request);
+        $request->getSession()->set(Security::LAST_USERNAME, $email);
 
-        $data = $form->getData();
-        $request->getSession()->set(
-            Security::LAST_USERNAME,
-            $data['email']
+        return new Passport(
+            new UserBadge($email),
+            new PasswordCredentials($request->request->get('password', '')),
+            [
+                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
+            ]
         );
-
-        return $data;
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider): UserInterface
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        return $userProvider->loadUserByUsername($credentials['email']);
+        // if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+        //     return new RedirectResponse($targetPath);
+        // }
+        return new RedirectResponse($this->urlGenerator->generate('sonata_admin_dashboard'));
+
+        // For example:
+        //return new RedirectResponse($this->urlGenerator->generate('some_route'));
+        throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
-    public function checkCredentials($credentials, UserInterface $user): bool
+    protected function getLoginUrl(Request $request): string
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
-    }
-
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): RedirectResponse
-    {
-        $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
-
-        return new RedirectResponse($this->router->generate('admin_login'));
-    }
-
-    protected function getLoginUrl(): string
-    {
-        return $this->router->generate('admin_login');
-    }
-
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): RedirectResponse
-    {
-        return new RedirectResponse($this->router->generate('sonata_admin_dashboard'));
+        return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }

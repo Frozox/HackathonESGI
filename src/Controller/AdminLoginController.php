@@ -1,45 +1,32 @@
 <?php
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Form\AdminLoginForm;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\HttpFoundation\Response;
 
-final class AdminLoginController extends AbstractController
+class AdminLoginController extends AbstractController
 {
-    /**
-     * @var AuthenticationUtils
-     */
-    private $authenticationUtils;
-
-    public function __construct(AuthenticationUtils $authenticationUtils)
+    #[Route(path: '/admin/login', name: 'admin_login')]
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        $this->authenticationUtils = $authenticationUtils;
+        // if ($this->getUser()) {
+        //     return $this->redirectToRoute('target_path');
+        // }
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
-    /**
-     * @Route("/admin/login", name="admin_login")
-     */
-    public function loginAction(): Response
+    #[Route(path: '/admin/logout', name: 'admin_logout')]
+    public function logout(): void
     {
-        $form = $this->createForm(AdminLoginForm::class, [
-            'email' => $this->authenticationUtils->getLastUsername()
-        ]);
-
-        return $this->render('security/login.html.twig', [
-            'last_username' => $this->authenticationUtils->getLastUsername(),
-            'form' => $form->createView(),
-            'error' => $this->authenticationUtils->getLastAuthenticationError(),
-        ]);
-    }
-
-    /**
-     * @Route("/admin/logout", name="admin_logout")
-     */
-    public function logoutAction(): void
-    {
-        // Left empty intentionally because this will be handled by Symfony.
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }
