@@ -85,13 +85,9 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
             "ckeditor:install": "symfony-cmd"
         },
-<<<<<<< HEAD
         "post-install-cmd": [
             "@auto-scripts"
         ],
-=======
-        "post-install-cmd": [],
->>>>>>> 7e31a87 (setup blog backoffice)
         "post-update-cmd": [
             "@auto-scripts"
         ]
