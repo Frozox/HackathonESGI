@@ -3,11 +3,15 @@
 namespace App\Admin;
 
 use App\Entity\Article;
+// use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Sonata\AdminBundle\Form\Type\ModelType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use App\Entity\Category;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 final class ArticleAdmin extends AbstractAdmin
@@ -17,8 +21,8 @@ final class ArticleAdmin extends AbstractAdmin
         $form
             ->with('Content', ['class' => 'col-md-9'])
             ->add('title', TextType::class)
-            ->add('body', TextareaType::class)
-            ->end()
+            ->add('body', TextType::class)
+            ->end() 
             ->with('Meta Data', ['class' => 'col-md-3'])
             ->add('category', ModelType::class, [
                 'class' => Category::class,
