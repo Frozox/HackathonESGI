@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -21,8 +22,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', nullable: true)]
     private $password;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $confirmToken;
+
+    public function __construct(){
+        $this->confirmToken = rtrim(strtr(base64_encode(random_bytes(150)), '+/', '-_'), '=');
+        $this->roles[] = 'ROLE_USER';
+    }
 
     public function getId(): ?int
     {
@@ -92,5 +101,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getConfirmToken(): ?string
+    {
+        return $this->confirmToken;
+    }
+
+    public function setConfirmToken(?string $confirmToken): self
+    {
+        $this->confirmToken = $confirmToken;
+
+        return $this;
+    }
+
+    public function hasValidToken(?string $confirmToken): bool
+    {
+        return $confirmToken === $this->confirmToken ? true : false;
+    }
+
+    public function confirmAccount(): self
+    {
+        $this->confirmToken = null;
+
+        return $this;
     }
 }
