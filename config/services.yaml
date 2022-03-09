@@ -32,3 +32,8 @@ services:
         class: App\Admin\ArticleAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\Article, manager_type: orm, label: Articles }
+
+    admin.user:
+        class: App\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\User, manager_type: orm, label: Users }
