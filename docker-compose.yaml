@@ -1,4 +1,11 @@
 version: '3.7'
+
+
+x-cache-from:
+  - &app-cache-from
+    cache_from:
+      - php:8.0.13-apache-buster
+
 services:
 
   mariadb:
@@ -26,7 +33,9 @@ services:
 
   php-fpm:
     image: php:8.0.13-apache-buster
-    build: .docker/build/php-fpm
+    build: 
+      context: .docker/build/php-fpm
+      <<: *app-cache-from
     container_name: hackathon-php-fpm
     working_dir: /var/www/
     ports:
@@ -43,4 +52,9 @@ services:
     image: jderusse/mailcatcher
     container_name: hackathon-mailcatcher
     ports:
-    - "9088:80"
+      - "9088:80"
+      - app-cache:/var/www/var
+      
+volumes:
+  app-cache: {}
+

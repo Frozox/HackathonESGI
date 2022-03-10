@@ -40,6 +40,7 @@ APP_ENV=dev
 APP_SECRET=1d459742e4eedfd698fea63db5cc808c
 
 MAILER_DSN=smtp://mailcatcher:25
+MAILER_ADMIN=account@wiredbeauty.com
 
 DB_USER=hackathon
 DB_NAME=hackathon
