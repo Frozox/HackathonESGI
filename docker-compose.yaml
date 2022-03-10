@@ -38,3 +38,9 @@ services:
       - .docker/conf/php-fpm/apache2.conf:/etc/apache2/apache2.conf
       - .docker/conf/php-fpm/sites-enabled/:/etc/apache2/sites-enabled
       # - .docker/conf/php-fpm/99-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
+  
+  mailcatcher:
+    image: jderusse/mailcatcher
+    container_name: hackathon-mailcatcher
+    ports:
+    - "9088:80"
