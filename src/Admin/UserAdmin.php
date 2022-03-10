@@ -57,6 +57,7 @@ final class UserAdmin extends AbstractAdmin
         $form
             ->with('Content', ['class' => 'col-md-9'])
             ->add('email', EmailType::class)
+            ->add('blockList')
             ->end();
     }
 

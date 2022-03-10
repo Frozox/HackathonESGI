@@ -33,6 +33,16 @@ services:
         tags:
             - { name: sonata.admin, model_class: App\Entity\Article, manager_type: orm, label: Articles, group: Content }
 
+    admin.page:
+        class: App\Admin\PageAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Page, manager_type: orm, label: Pages, group: Content }
+
+    admin.pageblock:
+        class: App\Admin\PageBlockAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\PageBlock, manager_type: orm, label: PageBlock, group: Content }
+
     admin.user:
         class: App\Admin\UserAdmin
         tags:
