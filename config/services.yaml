@@ -26,17 +26,17 @@ services:
     admin.category:
         class: App\Admin\CategoryAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Category, manager_type: orm, label: Category }
+            - { name: sonata.admin, model_class: App\Entity\Category, manager_type: orm, label: Category, group: Content }
 
     admin.article:
         class: App\Admin\ArticleAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\Article, manager_type: orm, label: Articles }
+            - { name: sonata.admin, model_class: App\Entity\Article, manager_type: orm, label: Articles, group: Content }
 
     admin.user:
         class: App\Admin\UserAdmin
         tags:
-            - { name: sonata.admin, model_class: App\Entity\User, manager_type: orm, label: Users }
+            - { name: sonata.admin, model_class: App\Entity\User, manager_type: orm, label: Users, group: Accounts}
         calls:
             - [ setRender, [ '@twig' ] ]
             - [ setRouter, [ '@router' ] ]

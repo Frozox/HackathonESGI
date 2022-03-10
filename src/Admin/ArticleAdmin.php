@@ -11,6 +11,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use App\Entity\Category;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
@@ -24,9 +25,9 @@ final class ArticleAdmin extends AbstractAdmin
             ->add('body', CKEditorType::class)
             ->end() 
             ->with('Meta Data', ['class' => 'col-md-3'])
-            ->add('category', ModelType::class, [
+            ->add('category', EntityType::class, [
                 'class' => Category::class,
-                'choice_label' => 'name',
+                'choice_label' => 'name'
             ])
             ->end();
     }
