@@ -49,7 +49,7 @@ class PageBlock
     public function setImage(?File $image): self
     {
         $newFilename = uniqid() . '.' . $image->guessExtension();
-        $fullFilePath = '/images/block/' . $newFilename;
+        $fullFilePath = 'images/block/' . $newFilename;
 
         $image->move(
             '../public/images/block/',

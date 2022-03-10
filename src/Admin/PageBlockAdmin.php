@@ -17,7 +17,7 @@ final class PageBlockAdmin extends AbstractAdmin
 {
     protected function preRemove(object $object): void
     {
-        (new Filesystem())->remove('../public' . $object->getImage());
+        (new Filesystem())->remove('../public/' . $object->getImage());
     }
 
     protected function configureFormFields(FormMapper $form): void
