@@ -1,0 +1,6 @@
+{% block body %}
+    {{ slug }}<br>
+    {% for block in blocks %}
+    <span>{{ block.getContent() }} - {{ block.getImage() }}</span><br>
+    {% endfor %}
+{% endblock %}
