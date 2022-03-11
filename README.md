@@ -80,6 +80,7 @@ Install dependencies in local repository
 ```
 composer install
 npm install
+npm run build
 ```
 Install database 
 
