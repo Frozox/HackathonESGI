@@ -83,3 +83,10 @@ Back-office route is /admin
 
 ID : admin@wb.com
 PW : password
+
+Access
+
+```
+website url: http://localhost:9080
+mailcatcher url: http://localhost:9088
+```
