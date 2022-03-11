@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            {% block title %}
+                Wired Beauty         
+            {% endblock %}
+        </title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+              theme: {
+                extend: {
+                  colors: {
+                    'wiredblue': '#9CB3C8',
+                    'wiredgreen': '#697B61'
+                  }
+                }
+              }
+            }
+          </script>
+    </head>
+    <body>
+        {% block body %}
+            <div class="w-full min-h-screen">
+                {% include 'navbar.html.twig' %}
+                {% block content %}{% endblock %}
+            </div>
+        {% endblock %}
+    </body>
+</html>

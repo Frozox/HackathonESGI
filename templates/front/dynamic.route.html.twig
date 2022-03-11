@@ -1,0 +1,6 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+    {% for block in blocks %}
+      {{ block.getContent() | raw  }}
+    {% endfor %}
+{% endblock %}

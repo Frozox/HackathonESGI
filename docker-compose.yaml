@@ -1,0 +1,60 @@
+version: '3.7'
+
+
+x-cache-from:
+  - &app-cache-from
+    cache_from:
+      - php:8.0.13-apache-buster
+
+services:
+
+  mariadb:
+    image: mariadb:10.7.1
+    container_name: hackathon-mariadb
+    environment:
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+    ports:
+      - "9306:3306"
+      
+  phpmyadmin:
+    image: phpmyadmin:5.1.1
+    container_name: hackathon-phpmyadmin
+    depends_on:
+      - mariadb
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: ${DB_USER}
+      PMA_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 9000:80
+
+  php-fpm:
+    image: php:8.0.13-apache-buster
+    build: 
+      context: .docker/build/php-fpm
+      <<: *app-cache-from
+    container_name: hackathon-php-fpm
+    working_dir: /var/www/
+    ports:
+      - 9080:80
+    environment:
+      - XDEBUG_MODE=debug
+    volumes:
+      - ./:/var/www/
+      - .docker/conf/php-fpm/apache2.conf:/etc/apache2/apache2.conf
+      - .docker/conf/php-fpm/sites-enabled/:/etc/apache2/sites-enabled
+      # - .docker/conf/php-fpm/99-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.ini
+      - app-cache:/var/www/var
+  
+  mailcatcher:
+    image: jderusse/mailcatcher
+    container_name: hackathon-mailcatcher
+    ports:
+      - "9088:80"
+      
+volumes:
+  app-cache: {}
+

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="px-24 py-8 max-w-screen-xl mx-auto mt-12">
+        <div class="flex">
+            <h2 class="pt-4 text-4xl sm:text-3xl lg:text-4xl tracking-tighter leading-tight w-[200px]">
+                {{article.title}}
+            </h2>
+            <div class="border-solid border-b-2 w-full"></div>
+        </div>
+    </div>
+    <div class="px-24 py-8 max-w-screen-xl mx-auto">
+        <div class="container flex">
+            <div class="basis-1/2">
+                <span class="flex items-center px-1 text-xl text-green">
+                    <span class="font-medium">
+                        {{article.body|raw}}
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
+	{% endblock %}

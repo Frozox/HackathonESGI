@@ -22,3 +22,31 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    admin.category:
+        class: App\Admin\CategoryAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Category, manager_type: orm, label: Category, group: Content }
+
+    admin.article:
+        class: App\Admin\ArticleAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Article, manager_type: orm, label: Articles, group: Content }
+
+    admin.page:
+        class: App\Admin\PageAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Page, manager_type: orm, label: Pages, group: Content }
+
+    admin.pageblock:
+        class: App\Admin\PageBlockAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\PageBlock, manager_type: orm, label: PageBlock, group: Content }
+
+    admin.user:
+        class: App\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\User, manager_type: orm, label: Users, group: Accounts}
+        calls:
+            - [ setRender, [ '@twig' ] ]
+            - [ setRouter, [ '@router' ] ]

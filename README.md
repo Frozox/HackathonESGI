@@ -1,3 +1,17 @@
+Installation
+============
+
+Project installation
+--------------------
+
+
+To install the project, you must at first clone both the code repository and the provisioning repository:
+```
+git clone git@github.com:Frozox/HackathonESGI.git
+```
+
+Then, this project can be installed by running the install local env:
+```
 # In all environments, the following files are loaded if they exist,
 # the latter taking precedence over the former:
 #
@@ -22,22 +36,50 @@ APP_SECRET=1d459742e4eedfd698fea63db5cc808c
 # Format described at https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
 # IMPORTANT: You MUST configure your server version, either here or in config/packages/doctrine.yaml
 #
+APP_ENV=dev
+APP_SECRET=1d459742e4eedfd698fea63db5cc808c
+
+MAILER_DSN=smtp://mailcatcher:25
+MAILER_ADMIN=account@wiredbeauty.com
+
+DB_USER=hackathon
+DB_NAME=hackathon
+DB_PASSWORD=hackathon
+DB_HOST=hackathon-mariadb:3306
+DB_SRV_VERSION=mariadb-10.7.1
+DATABASE_URL="mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}"
 # DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
-# DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name"
 # DATABASE_URL="postgresql://symfony:ChangeMe@127.0.0.1:5432/app?serverVersion=13&charset=utf8"
 ###< doctrine/doctrine-bundle ###
+```
 
-###> symfony/webapp-meta ###
-MESSENGER_TRANSPORT_DSN=doctrine://default?auto_setup=0
-###< symfony/webapp-meta ###
+Run the docker 
 
-###> symfony/messenger ###
-# Choose one of the transports below
-# MESSENGER_TRANSPORT_DSN=doctrine://default
-# MESSENGER_TRANSPORT_DSN=amqp://guest:guest@localhost:5672/%2f/messages
-# MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages
-###< symfony/messenger ###
+```
+docker compose build --no-cache
+docker compose --env-file .env.local up -d 
+```
 
-###> symfony/mailer ###
-# MAILER_DSN=smtp://localhost
-###< symfony/mailer ###
+Install dependencies in local repository
+
+```
+composer install
+npm install
+```
+Install database 
+
+```
+docker compose exec {your container name} php bin/console d:m:m
+docker compose exec {your container name} php bin/console d:s:u
+```
+
+Install assets inside docker container 
+
+```
+docker compose exec {your container name} php bin/console assets:install
+```
+
+Back-office route is /admin
+
+ID : admin@wb.com
+PW : password

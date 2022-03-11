@@ -1,0 +1,29 @@
+<nav class="py-8 max-w-screen-xl mx-auto">
+    <div class="flex">
+        <div class="basis-1/6">
+            <img class="h-10 w-auto sm:h-20" src={{ asset('images/logos/wired-beauty.svg') }} />
+        </div>
+        <div class="basis-4/6 border-solid border-b-2 w-full">
+            <ul class="flex items-center justify-between h-full">
+                <li class="font-medium {% if slug is not defined %}text-wiredblue{% endif %}">
+                    <a href={{ path('home') }}>Home</a>
+                </li>
+                {% if pages is defined %}
+                    {% for page in pages %}
+                        <li class="font-medium {% if slug is defined and page.slug == slug %}text-wiredblue{% endif %}">
+                            <a href={{ page.getSlug() }}>{{ page.getName() }}</a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+        <div class="basis-1/6">
+            {% if app.user %}
+                <a class="flex inline-flex justify-end items-center px-10 py-2 font-medium h-full w-full" href={{ path('logout') }}><img class="px-2 h-5 w-auto sm:h-5" src={{ asset('images/icons/log-out.svg') }} />Log out</a>
+                <a class="flex inline-flex justify-end items-center px-10 py-2 font-medium h-full w-full" href={{ path('profile') }}><img class="px-2 h-5 w-auto sm:h-5" src={{ asset('images/icons/profil.svg') }} />Profile</a>
+            {% else %}
+                <a class="flex inline-flex justify-end items-center px-10 py-2 font-medium h-full w-full" href={{ path('login') }}><img class="px-2 h-5 w-auto sm:h-5" src={{ asset('images/icons/log-in.svg') }} />Log in</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="px-24 py-8 max-w-screen-xl mx-auto mt-12">
+        <div class="flex">
+            <h2 class="pt-4 text-4xl sm:text-3xl lg:text-4xl tracking-tighter leading-tight w-[200px]">
+                Profile
+            </h2>
+            <div class="border-solid border-b-2 w-full"></div>
+        </div>
+    </div>
+    <div class="px-24 py-8 max-w-screen-xl mx-auto">
+        <div class="container flex">
+            <div class="basis-1/2">
+                <span class="flex items-center px-1 text-xl text-green">
+                    <span class="font-medium">
+                        {{user.email}}
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="px-24 py-8 max-w-screen-xl mx-auto mt-12">
+        <div class="flex">
+            <h2 class="pt-4 text-4xl sm:text-3xl lg:text-4xl tracking-tighter leading-tight w-[200px]">
+                Projects
+            </h2>
+            <div class="border-solid border-b-2 w-full"></div>
+        </div>
+    </div>
+    <div class="px-24 py-8 max-w-screen-xl mx-auto">
+        <div class="container flex">
+            <div class="basis-1/2">
+                <span class="flex items-center px-1 text-xl text-green">
+                    <span class="font-medium">
+                        Sample Project 1
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="px-24 py-8 max-w-screen-xl mx-auto">
+        <div class="container flex">
+            <div class="basis-1/2">
+                <canvas id="myChart1"></canvas>     
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script>
+        var ctx = document.getElementById('myChart1').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+        
+            // The data for our dataset
+            data: {
+                labels: ['T1', 'T2', 'T3', 'T4'],
+                datasets: [{
+                    label: 'Sample Project Chart 1',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [0, 10, 5, 2]
+                }]
+            },
+        
+            // Configuration options go here
+            options: {}
+        });
+    </script>
+	{% endblock %}
