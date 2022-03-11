@@ -15,7 +15,7 @@ class DynamicRouteController extends AbstractController
         $page = $pageRepository->findOneBy(['slug' => $slug]);
 
         if($page){
-            return $this->render('front/dynamic.route.html.twig', ['slug' => $slug, 'blocks' => $page->getBlockList()]);
+            return $this->render('front/dynamic.route.html.twig', ['slug' => $slug, 'blocks' => $page->getBlockList(), 'pages' => $pageRepository->findAll()]);
         }
 
         return $this->redirectToRoute('home');
