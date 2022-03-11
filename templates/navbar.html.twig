@@ -5,11 +5,11 @@
         </div>
         <div class="basis-4/6 border-solid border-b-2 w-full">
             <ul class="flex items-center justify-between h-full">
-                <li class="font-medium">
+                <li class="font-medium {% if slug is not defined %}text-wiredblue{% endif %}">
                     <a href={{ path('home') }}>Home</a>
                 </li>
                 {% for page in pages %}
-                    <li class="font-medium">
+                    <li class="font-medium {% if slug is defined and page.slug == slug %}text-wiredblue{% endif %}">
                         <a href={{ page.getSlug() }}>{{ page.getName() }}</a>
                     </li>
                 {% endfor %}

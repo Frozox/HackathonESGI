@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Entity\Article;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -26,7 +27,7 @@ final class PageBlockAdmin extends AbstractAdmin
             $form
                 ->with('Content', ['class' => 'col-md-9'])
                 ->add('name', TextType::class)
-                ->add('content', TextType::class, [
+                ->add('content', CKEditorType::class, [
                     'required' => false
                 ])
                 ->add('image', FileType::class, [
@@ -38,7 +39,7 @@ final class PageBlockAdmin extends AbstractAdmin
             $form
                 ->with('Content', ['class' => 'col-md-9'])
                 ->add('name', TextType::class)
-                ->add('content', TextType::class, [
+                ->add('content', CKEditorType::class, [
                     'required' => false
                 ])
                 ->add('image', TextType::class, [
