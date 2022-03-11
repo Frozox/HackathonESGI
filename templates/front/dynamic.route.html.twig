@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
-{% block body %}
-    {{ parent() }}
-    {{ slug }}<br>
+{% block content %}
     {% for block in blocks %}
-      <span>{{ block.getContent() }} - {% if block.getImage() %}<img src={{ asset(block.getImage()) }}>{% endif %}</span><br>
+      {{ block.getContent() | raw  }}
     {% endfor %}
 {% endblock %}

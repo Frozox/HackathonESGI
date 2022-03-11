@@ -15,7 +15,7 @@ class PageBlock
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $content;
 
     #[ORM\Column(type: 'string', nullable: true)]
