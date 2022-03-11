@@ -27,10 +27,10 @@ class BlogController extends AbstractController
     }
 
     #[Route('/{id}', name: 'article_show', requirements: ['id' => '^\d+$'], methods: ['GET'])]
-    public function show(Article $article): Response
+    public function show($id, ArticleRepository $articleRepository): Response
     {
         return $this->render('front/article/show.html.twig', [
-            'article' => $article
+            'article' => $articleRepository->findOneBy(['id' => $id])
         ]);
     }
 }
