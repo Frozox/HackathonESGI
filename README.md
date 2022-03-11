@@ -53,6 +53,21 @@ DATABASE_URL="mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}"
 ###< doctrine/doctrine-bundle ###
 ```
 
+Access
+
+```
+website url: http://localhost:9080
+mailcatcher url: http://localhost:9088
+phpmyadmin url: http://localhost:9000
+
+Back-office route is http://localhost:9080/admin
+
+Admin id
+
+id : admin@wb.com
+pswd : password
+```
+
 Run the docker 
 
 ```
@@ -69,24 +84,15 @@ npm install
 Install database 
 
 ```
-docker compose exec {your container name} php bin/console d:m:m
-docker compose exec {your container name} php bin/console d:s:u
+Import ./doc/wired-beauty.sql into phpmyadmin
+
+OR
+
+docker exec -it hackathon-php-fpm php bin/console d:s:u --force
 ```
 
 Install assets inside docker container 
 
 ```
-docker compose exec {your container name} php bin/console assets:install
-```
-
-Back-office route is /admin
-
-ID : admin@wb.com
-PW : password
-
-Access
-
-```
-website url: http://localhost:9080
-mailcatcher url: http://localhost:9088
+docker exec -it hackathon-php-fpm php bin/console assets:install
 ```

@@ -8,6 +8,7 @@ use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\PageRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -19,18 +20,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class BlogController extends AbstractController
 {
     #[Route('/', name: 'article_index', methods: ['GET'])]
-    public function index(ArticleRepository $articleRepository): Response
+    public function index(ArticleRepository $articleRepository, PageRepository $pageRepository): Response
     {
         return $this->render('front/article/index.html.twig', [
             'articles' => $articleRepository->findAll(),
+            'pages' => $pageRepository->findAll(),
         ]);
     }
 
     #[Route('/{id}', name: 'article_show', requirements: ['id' => '^\d+$'], methods: ['GET'])]
-    public function show($id, ArticleRepository $articleRepository): Response
+    public function show($id, ArticleRepository $articleRepository, PageRepository $pageRepository): Response
     {
         return $this->render('front/article/show.html.twig', [
-            'article' => $articleRepository->findOneBy(['id' => $id])
+            'article' => $articleRepository->findOneBy(['id' => $id]),
+            'pages' => $pageRepository->findAll(),
         ]);
     }
 }

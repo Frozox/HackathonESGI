@@ -20,17 +20,11 @@ class FrontController extends AbstractController
     }
 
     #[Route('/profile', name: 'profile')]
-    public function profile(): Response
+    public function profile(PageRepository $pageRepository): Response
     {
         return $this->render('front/profile.html.twig', [
             'user' => $this->getUser(),
-            'menus' => [
-                'What we do',
-                'Our device',
-                'Who we are',
-                'Scientific validation',
-                'Studies & devices'
-            ]
+            'pages' => $pageRepository->findAll(),
         ]);
     }
 }
