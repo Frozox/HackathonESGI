@@ -27,6 +27,7 @@ final class PageAdmin extends AbstractAdmin
         $form
             ->with('Content', ['class' => 'col-md-9'])
             ->add('slug', TextType::class)
+            ->add('name', TextType::class)
             ->add('blockList', EntityType::class, [
                 'class' => PageBlock::class,
                 'choice_label' => 'name',
